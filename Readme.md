@@ -224,6 +224,10 @@ Data types
 
     // need more understanding of class variable overriding.
 
+    - so basically ParentClass p = new ChildCLass();
+    so with p object we can only call the methods which are present inside ParentClass. if you try to call
+    a method which is only declared and defined in ChildClass that wont be possible.
+
 # packages
 
     - it simply means folder.
@@ -300,14 +304,262 @@ Data types
         so it called AutoBoxing.
     - int num2 = i.intValue()
         this is called autounboxing
-    - paresInt basically convert a number string to number
+    - paresInt basically convert a number string to numbegit remote add origin https://github.com/ganyash/revisit-core-java.gitr
          Integer.parseInt("12") // 12.
 
 # abstract
 
     - if there is an abstract method in the class, the class also abastract.
-    - abstract method can be defined it can only decalred that no open and close flower brackets.
+    - abstract method cannot be defined it can only decalred that no open and close flower brackets.
     - object of abstract class cannot be created.
     - if any class extend abstract class, it must implement all the abstract method of an abastract class.
     - Note u cannot create obj of abstract class but u can create abstract class refrence variable,
     - Abstract clas may or may noy have abstract method.
+
+# inner class
+
+    - A class inside a outer class
+    - A a= new A();// outer class obj;
+    - A.B b = a.new B(); // proving class B is non static
+    - A.B b = new A.B(); // proving class B is  static class
+    - Yes we can have class static as well providing that is a inner otherwise class can't be static.
+
+# anyonynms inner class
+
+    - class A{
+        public void show(){
+            sout("printA")
+        }
+    }
+
+    public class B{
+        public static void main(String []){
+            A a= new A()
+            {
+                 public void show(){
+                    sout("print inner class");  // baically we are extending parent (A) class here kindof.
+                }
+            };
+            a.show() // print inner class
+        }
+
+    }
+
+# use of anyonynms inner class when we have abstract class
+
+    - since we can't create object of an Abstract class, but with the help of 'anyonynms inner class', we can do that
+
+    - foreg
+        - abstract class A{
+        public abstract void show();
+    }
+     public class B{
+        public static void main(String []){
+            A a= new A()  // it is possible since we creating object of ''anyonynms  inner class' not the abstract class obj.
+            {
+                 public void show(){
+                    sout("print inner class");
+                    // since we this is kind of inheritance, so it must implement all the  method classA .
+                }
+            };
+            a.show() // print inner class
+        }
+
+    }
+
+    - overall purpose of ''anyonynms inner class' is , when we know the child class obj is just creating once, so inorder to define new child class use 'anyonynms inner class'
+
+# interface
+
+    - when an abstract class only contains abstract method then we have another way which is interface.
+    - interface is not class.
+    - by default every method of interface is public abstract
+    - interface  A {
+            vois show();
+            void config(); // default public abstract.
+    }
+    - class implements interface
+    - if class implements interface // then it needs to define all the method of interface, otherwise the class become the abstract class
+    - if u define variable in interface, they are default static and final.
+
+    - class can implements more than one interface
+        class C implements A, B {  // assume B is an interface too.
+
+        }
+    - an interface  can extends another interface.
+    - when class implements interface, it also get interdace data member, which obviously are static and final.
+
+# enums
+
+    - everthing is object in java
+    - so emum is kinda class
+    - enum Status {
+        Running, Failed, Pending. // so these are basically object of Status, these also called named constants
+    }
+
+    - public class Demo {
+        psvm {
+            Status s = Status.Running;
+            sout(s) // Running
+
+            Status[] s = Status.values(); //gives array of values.
+            sout(s[0]) //Running
+        }
+    }
+
+    - also these methods like values, ordindal are coming from enum class.
+        sout(s.getClass().getSuperClass()) // java.lang.Enum
+
+    - since enum is class so
+        enum Laptop {
+            Macbook(2000), XPS(2100), Dell; // here these are object of laptop, so basocally we are calling constructor of Laptop
+
+            private int price;
+
+            private Laptop(){
+                price = 500; // assign 500 to Dell laptop since it will call default constructor.
+            }
+
+            private Laptop(int price){   // here constructor is private , since we are creating object inside enum class only.
+                this.price= price;
+            }
+            // getter to get the price
+        }
+
+# functional interfce
+
+    - interfcae having one method
+    - take help of @FunctionInterface to give error if interaface has more than one method.
+    - for eg
+        @FunctionalInterface
+
+            interface InnerHello {
+                int x=10;
+                void show();
+
+            }
+
+# lambda expression
+
+    - this only works wth functional interface
+    - since we know that functional interface has only one method
+    - so
+        public class A {
+            psvm(String [] args){
+                InnerHello ih = new InnerHello()
+                {
+                    public void show(){
+                        sout(in inner anyoynms class);
+                    }
+                };
+            }
+        }
+
+        INSTEAD OF THE ABOVE CODE WE CAN USE LAMBDA EXPRESSOIN
+
+         public class A {
+            psvm(String [] args){
+                InnerHello ih =() ->
+                {
+                        sout(in inner anyoynms class);
+                };
+            }
+        }
+
+# types of interface
+
+    - Normal (2 or more abstract method)
+    - Functional Single abstract method. (only 1 abstract method)
+    - Marker (has no abstract method)
+
+    two more concepts
+    Marker interfcae help in serializing and deserializing of object
+    serializing: saving(write) obj into files
+    deserializing: extracting(read) obj from files
+
+# exception
+
+    - Error
+        - Complile time error
+        - Run time error(Exception): Exceution of program stop
+        - logical erro.
+    - Runtime error
+        - Multiple catch to handle different type of exception.
+        - every exception type inheritd from Exception class.
+
+# Class hierarchy in java for exception
+
+- Object Class
+  - Throwable Class
+    - Error: can't handle ( ThreadDeath, Outofmemory, IoError)
+    - Exception Class: can be handle
+      - Run time exception- Unchecked exception ( unchecked means its upto u if u want u can handle)
+        - Airthmrtic.
+        - ArrayOutOfBound
+        - NullPointerException
+        - many more...
+      - Sql exception - Checked exceptin (checked means must need to handle)
+      - IO exception - Checked exception
+
+# throw
+
+    - you can throw the error from try blocl
+    int i =1;
+     try {
+         i = 18/20
+        if(i==0){
+            throw new AirthmeticException("no zero value we want")
+        }
+     }
+     catch(AirthmeticException e){
+        i = 1;
+        sout("default o/p "+ e) // default o/p java.lang.ArithmeticException: no zero value we want
+     }
+
+# create own exception class
+
+- Class MyOwnException extends Exception {
+  MyOwnException(String msg){
+  super(msg);
+  }
+  }
+
+- public class A {
+  psvm{
+  int i =1;
+  try {
+  i = 18/20
+  if(i==0){
+  throw new MyOwnException("no zero value we want")
+  }
+  }
+  catch(MyOwnException e){
+  i = 1;
+  sout("default o/p "+ e) // default o/p MyOwnException: no zero value we want
+  }
+  }
+  }
+
+# throws
+
+    - basically ducking the exception
+    - instead a fn handle the exception, it just throws the exception, and the caller need to handle the exception
+
+    class A {
+        public void show() throws ClassNotFOundException{
+            Class.forName("somerandomclassnamewhichdoesnotevenexist")
+            // here line 549 we must need to handle this error either usign try catch block here itself or throws to the caller but it must to handle since it is checked exception.
+        }
+    }
+
+    public Class B{
+        psvm{
+            A a = new A();
+            try {
+                a.show();  // need to handle the error which was thrown by show method of class A, so use try catch here
+              }
+            catch (ClassNotFOundException e){
+                sout("error handled "+e)
+            }
+        }
+    }
