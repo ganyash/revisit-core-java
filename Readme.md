@@ -563,3 +563,172 @@ Data types
             }
         }
     }
+
+# scanner and bufferedReader
+
+    - System.out.println
+        - out object is created from PrintStream Class
+        - out object is defined as static inside System class.
+    - ways to take input
+      - int read = System.in.read(); // it gives the ascii value for the input given by user
+      - BufferedReader
+        InputStreamReader in = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(in);
+
+
+        int num  = Integer.parseInt(br.readLine()); readLine gives u string.
+
+      - Scanner
+        Scanner sc = new Scanner(System.in);
+        int num  = sc.nextInt();
+        sout(num)
+
+# finally
+
+    - finally will run irrespective of the exception or not
+    - so we can sometime no need of catch, we can use try with finally.
+    - finally block we use when we need to close the connection like buffereedreader connections, br.close();
+    - note: finally is not meant to handle the exceptiom, it will run regardless if exception is there or not.
+
+# threads
+
+    - smalles unit of an program
+    - A class become thread class just use extend Thread\
+    - the class must have run function.
+    - when we create object of the extended thread class it needs to call start method.
+    - Class A extends Thread{
+        public void run(){
+            for(int i=0;i<1000;i++>){
+                sout("in A")
+
+                // Thread.sleep(2) it means this thread will go for sleep for 2ms
+            }
+        }
+    }
+    -Class B extends Thread{
+        public void run(){
+            for(int i=0;i<1000;i++>){
+                sout("in B")
+            }
+        }
+    }
+    public Class C {
+        psvm{
+            A a = new A();
+            B b = new B();
+            a.start();
+            b.start();
+        }
+    }
+    - a.setPriority(2) // can set thread priority from 1(being lowest) to 10(being highest priority);
+    - Thread.sleep(2)  // sleep thread for 2 ms.
+    - thread1.join() //basically stops the next stt untill thread1 obj  finish its job.
+    - sychroniaed thread is basicallym, at a time only one thread is allowed to use the sharable entity
+    for eg:
+    public synchronised counter{
+        count++;
+    }
+    - states of thread: new, runnable, run, waiting, dead
+
+# Collections
+
+     there are 3 things
+        - Collection API- concept
+        - Collection- interface
+        - Collections - class
+    - Iterable Interface
+        - Collection interface extends Iterable Interface
+            - List, Queue, Set interface extends Collection interface
+            - ArrayList Class, LinkedList Class implements List Interface
+            - DeQueue Class implements Queue Interface.
+            - HashSet, LinkedHashSet Classes implemets Set Interface
+
+    for eg
+        List<Integer> c  = new ArrayList<Integer>();
+        ArrayList.add(10)
+        sop(c) // print the arraylist [10]
+        also we can define List<Integer> list = Array.asList(4,5,6,7)
+
+    - Set: collection of unique value
+        - it does not preserve the order the element was added.
+        - Set<Integer> s = new HashSet<Integer>();
+        s.add(1)
+        s.add(2)
+        s.add(1) // this will omit
+
+    - TreeSet: similar to set, just it gives u in sorted values
+        - Set<Integer> s = new TreeSet<Integer>();
+
+    - iterator
+        - Since iterator is method of Iterable interface, and thisis the topmost interface in hierarchy.
+        - Iterable <Integer> values = s.iterator();
+        while(values.hasNext()){
+            sop(values.next())
+        }
+
+# Map
+
+    - Map is collection of key value pair
+    - Map is an interface
+    - Map<String, Integer> map = new HashMap<>()
+        map.put('yas', 67);
+        map.put('xyz', 27);
+        sout(map) // {xyz=27, yash=67} // see the insertion order not preserve
+    - to get all keys: map.keySet() // return the set of keys ['yas', 'xyz']
+        for(String key: map.keySet()){
+            sop(key+ " "+ map.get(key))
+        }
+    - Hashtable is similar to HashMap its just Hashtable is synchronizes i.e thread safe
+
+# Comparator
+
+    - it is an interface where u can define ur own sorting logic
+        Comparator <Integer> compObj = new Comparator<Integer> {
+            public int compare(Integer i, Integer j){
+                if(i%10>j%10){
+                    return 1; // basically swap
+                }
+                else {
+                    return -1;
+                }
+            }
+        }
+
+
+    - this compObj obj can be pass as an argunet inside Collections.sort(nums,compObj ) // assume nums is Integer list
+
+# Comprable
+
+    class needs to implemnts Comprable interface and hence they need define the compareTo function
+    Class Student implements Comprable<Student> {
+        int age ;
+        String name;
+
+
+        consttructor .....
+
+        public int compareTo(Student that){
+              if(this.age>that.age){
+                    return 1; // basically swap
+                }
+                else {
+                    return -1;
+                }
+        }
+    }
+
+    punblic class Main{
+        psvm(){
+            Collections.sort(studentsList)  // if u see we dont need to pass second args since the class student already implemted Comprable interface.
+        }
+    }
+
+# Stream APIS
+
+    List nums = Array.asList(1,2,3)
+    -Stream s1= nums.stream();
+    - Stream s2 = s1.filter((n)=>n<2);
+    - Stream s3 = s1.map((n)=>n*2);
+    -int num = s3.reduce(0, (c,e)=>c+e)
+
+    Stream can't be used again that is,  we can't use stream obj onlyoce.

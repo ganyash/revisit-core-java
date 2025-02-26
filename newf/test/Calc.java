@@ -1,4 +1,5 @@
 package test;
+import test.AdvCalc;
 public class Calc {
    
 
